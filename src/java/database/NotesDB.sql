@@ -13,6 +13,7 @@ DROP TABLE if exists user_table;
         password VARCHAR(20)
 );
 
+
 INSERT INTO user_table (active, email, fname, lname, password)
     VALUES ('1', 'admin@admin.com', 'First', 'Last', 'password');
 
