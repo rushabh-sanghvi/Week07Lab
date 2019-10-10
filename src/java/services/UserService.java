@@ -1,6 +1,6 @@
-package businesslogic;
+package services;
 
-import domainmodel.User;
+import models.User;
 import java.util.List;
 
 public class UserService {

@@ -1,6 +1,6 @@
 package dataaccess;
 
-import domainmodel.User;
+import models.User;
 import java.util.List;
 
 public class UserDB {
