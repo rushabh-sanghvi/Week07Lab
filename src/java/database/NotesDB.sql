@@ -7,10 +7,12 @@ DROP TABLE if exists user_table;
 
     CREATE TABLE if not exists user_table(
         active boolean NOT NULL default '1',
-        email VARCHAR(40) NOT NULL,
+        email VARCHAR(40) NOT NULL UNIQUE,
         fname VARCHAR(20),
         lname VARCHAR(20),
-        password VARCHAR(20)
+        password VARCHAR(20),
+        PRIMARY KEY (email),
+        CHECK (password = 'password')
 );
 
 
