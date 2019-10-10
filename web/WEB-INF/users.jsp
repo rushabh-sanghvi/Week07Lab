@@ -1,6 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
+<!--Color Palette: https://colorhunt.co/palette/117601-->
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -12,6 +14,7 @@
     <style>
       body {
         height: 100vh;
+        background: #232931;
       }
       .page {
         display: grid;
@@ -26,12 +29,14 @@
       }
       .form {
         grid-area: form;
+        background: #393e46;
+        color: #eeeeee;
       }
     </style>
   </head>
   <body>
     <div class="page">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="/">Inventory Management</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -45,13 +50,16 @@
           </ul>
         </div>
       </nav>
+
       <div class="form">
         <h2>Manage Users</h2>
-        <h4>Users</h4>
 
-        <h2>Manage Users</h2>
         <h4>Users</h4>
+        
+        
+        <h4>Add User</h4>
       </div>
+
     </div>
   </body>
 </html>
