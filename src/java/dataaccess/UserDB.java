@@ -16,11 +16,11 @@ public class UserDB {
     
     private static final String UPDATE_STATEMENT = "UPDATE User_Table set fname=? lname=? where active = true and email=?";
 
-    public int insert(User user) throws NotesDBException {
-        
+    public int insert(User user) throws InventoryDBException {
+        return 0;
     }
 
-    public int update(User user) throws NotesDBException {
+    public int update(User user) throws InventoryDBException {
         
         int successCount = 0;
         try
@@ -46,7 +46,7 @@ public class UserDB {
      * @return ArrayList dudes - the list of users retrieved from the database.
      * @throws InventoryDBException 
      */
-    public List<User> getAll() throws InventoryDBException {
+    public List<User> getAll() throws InventoryDBException, SQLException  {
         User dude;
         ArrayList<User> dudes = new ArrayList<>();
         
@@ -55,10 +55,10 @@ public class UserDB {
         ResultSet product = ps.executeQuery();
         
         while(product.next()){
-            boolean boo = product.getBoolean();
-            String userEmail = product.getString();
-            String fname = product.getString();
-            String lname = product.getString();
+            boolean boo = product.getBoolean(1);
+            String userEmail = product.getString(2);
+            String fname = product.getString(3);
+            String lname = product.getString(4);
             dude = new User(boo, userEmail, fname, lname, null);
             dudes.add(dude);
         }
@@ -72,18 +72,18 @@ public class UserDB {
      * @return User dude - the user retrieved from the database.
      * @throws InventoryDBException 
      */
-    public User getUser(String email) throws InventoryDBException {
-        User dude;
+    public User getUser(String email) throws InventoryDBException, SQLException {
+        User dude = new User();
         String preparedSQL = "SELECT active, email, fname, lname FROM user_table WHERE email = ?";
         PreparedStatement ps = connection.prepareStatement(preparedSQL);
         ps.setString(1, email);
         ResultSet product = ps.executeQuery();
         
         while(product.next()){
-            boolean boo = product.getBoolean();
-            String userEmail = product.getString();
-            String fname = product.getString();
-            String lname = product.getString();
+            boolean boo = product.getBoolean(1);
+            String userEmail = product.getString(2);
+            String fname = product.getString(3);
+            String lname = product.getString(4);
             dude = new User(boo, userEmail, fname, lname, null);
         }
 
