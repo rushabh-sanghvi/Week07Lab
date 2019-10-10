@@ -36,8 +36,8 @@ public class UserDB {
 
     /**
      * This method queries the database for all users. Every user (dude) is put into an ArrayList of users (dudes).
-     * @return ArrayList dudes
-     * @throws NotesDBException 
+     * @return ArrayList dudes - the list of users retrieved from the database.
+     * @throws InventoryDBException 
      */
     public List<User> getAll() throws InventoryDBException {
         User dude;
@@ -61,9 +61,9 @@ public class UserDB {
 
     /**
      * This method queries the database for a particular user (dude) that has a matching email.
-     * @param email
-     * @return User dude
-     * @throws NotesDBException 
+     * @param email - the user's email to be searched for.
+     * @return User dude - the user retrieved from the database.
+     * @throws InventoryDBException 
      */
     public User getUser(String email) throws InventoryDBException {
         User dude;
