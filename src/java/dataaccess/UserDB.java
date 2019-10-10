@@ -5,23 +5,23 @@ import java.util.List;
 
 public class UserDB {
 
-    public int insert(User user) throws NotesDBException {
+    public int insert(User user) throws InventoryDBException {
         return 0;
     }
 
-    public int update(User user) throws NotesDBException {
+    public int update(User user) throws InventoryDBException {
         return 0;
     }
 
-    public List<User> getAll() throws NotesDBException {
+    public List<User> getAll() throws InventoryDBException {
         return null;
     }
 
-    public User getUser(String username) throws NotesDBException {
+    public User getUser(String username) throws InventoryDBException {
         return null;
     }
 
-    public int delete(User user) throws NotesDBException {
+    public int delete(User user) throws InventoryDBException {
         return 0;
     }
 }
