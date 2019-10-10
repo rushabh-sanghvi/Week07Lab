@@ -6,19 +6,22 @@ USE InventoryDB;
 DROP TABLE if exists user_table;
 
     CREATE TABLE if not exists user_table(
-        email VARCHAR2(40),
-        fname VARCHAR2(20),
-        lname VARCHAR2(20),
-        password VARCHAR2(20));
+        active boolean NOT NULL default '1',
+        email VARCHAR(40) NOT NULL,
+        fname VARCHAR(20),
+        lname VARCHAR(20),
+        password VARCHAR(20)
+);
+
 
 INSERT INTO user_table (active, email, fname, lname, password)
-    VALUES (1, 'admin@admin.com', 'First', 'Last', 'password');
+    VALUES ('1', 'admin@admin.com', 'First', 'Last', 'password');
 
 INSERT INTO user_table (active, email, fname, lname, password)
-    VALUES (1, 'arran.woodruff@sait.edu.ca', 'Arran', 'Woodruff', 'password');
+    VALUES ('1', 'arran.woodruff@sait.edu.ca', 'Arran', 'Woodruff', 'password');
 
 INSERT INTO user_table (active, email, fname, lname, password)
-    VALUES (1, 'david.ward@sait.edu.ca', 'David', 'Ward', 'password');
+    VALUES ('1', 'david.ward@sait.edu.ca', 'David', 'Ward', 'password');
 
 INSERT INTO user_table (active, email, fname, lname, password)
-    VALUES (1, 'steven.wong01@sait.edu.ca', 'Steven', 'Wong', 'password');
+    VALUES ('1', 'steven.wong01@sait.edu.ca', 'Steven', 'Wong', 'password');
