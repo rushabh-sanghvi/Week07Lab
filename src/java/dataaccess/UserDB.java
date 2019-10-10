@@ -8,11 +8,11 @@ import java.util.List;
 
 public class UserDB {
 
-    public int insert(User user) throws NotesDBException {
+    public int insert(User user) throws InventoryDBException {
         return 0;
     }
 
-    public int update(User user) throws NotesDBException {
+    public int update(User user) throws InventoryDBException {
         return 0;
     }
 
@@ -21,7 +21,7 @@ public class UserDB {
      * @return ArrayList dudes
      * @throws NotesDBException 
      */
-    public List<User> getAll() throws NotesDBException {
+    public List<User> getAll() throws InventoryDBException {
         User dude;
         ArrayList<User> dudes = new ArrayList<>();
         
@@ -30,8 +30,11 @@ public class UserDB {
         ResultSet product = ps.executeQuery();
         
         while(product.next()){
-            User dude = new User(product.getBoolean(), product.getString(),
-                                product.getString(), product.getString());
+            boolean boo = product.getBoolean();
+            String userEmail = product.getString();
+            String fname = product.getString();
+            String lname = product.getString();
+            dude = new User(boo, userEmail, fname, lname, null);
             dudes.add(dude);
         }
 
@@ -44,21 +47,25 @@ public class UserDB {
      * @return User dude
      * @throws NotesDBException 
      */
-    public User getUser(String email) throws NotesDBException {
+    public User getUser(String email) throws InventoryDBException {
+        User dude;
         String preparedSQL = "SELECT active, email, fname, lname FROM user_table WHERE email = ?";
         PreparedStatement ps = connection.prepareStatement(preparedSQL);
         ps.setString(1, email);
         ResultSet product = ps.executeQuery();
         
         while(product.next()){
-            User dude = new User(product.getBoolean(), product.getString(),
-                                product.getString(), product.getString());
+            boolean boo = product.getBoolean();
+            String userEmail = product.getString();
+            String fname = product.getString();
+            String lname = product.getString();
+            dude = new User(boo, userEmail, fname, lname, null);
         }
 
         return dude;
     }
 
-    public int delete(User user) throws NotesDBException {
+    public int delete(User user) throws InventoryDBException {
         return 0;
     }
 }
