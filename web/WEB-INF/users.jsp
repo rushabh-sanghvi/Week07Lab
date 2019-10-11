@@ -6,53 +6,19 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Manage Users</title>
+    <link 
+      rel="stylesheet" 
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+      crossorigin="anonymous"
+      />
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
       crossorigin="anonymous"
       />
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <title>Manage Users</title>
-    <style>
-      body {
-        height: 100vh;
-        background: #232931;
-      }
-      .navbar {
-        grid-area: header;
-        height: 4rem;
-      }
-      .main {
-        margin: auto;
-        padding-top: 1rem;
-        width: 60%;
-        background: #393e46;
-        color: #eeeeee;
-        max-height: calc(100vh - 4rem);
-        overflow-y: auto;
-      }
-      .row-btn {
-        padding: 0;
-        min-width: 35px;
-      }
-      .user-add-form {
-        display: flex;
-        margin: auto;
-      }
-      .user-add-form input {
-        border-style: solid;
-        border-width: 1px;
-        margin: 0 !important;
-        width: 30%;
-        padding: 5px;
-      }
-      .user-add-form input:last-child {
-        width: 10%;
-      }
-    </style>
+    <link href="/css/users.css" rel="stylesheet">
   </head>
   <body>
     <div class="page">
