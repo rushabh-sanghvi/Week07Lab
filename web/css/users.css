@@ -1,0 +1,35 @@
+body {
+  height: 100vh;
+  background: #232931;
+}
+.navbar {
+  grid-area: header;
+  height: 4rem;
+}
+.main {
+  margin: auto;
+  padding-top: 1rem;
+  width: 60%;
+  background: #393e46;
+  color: #eeeeee;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+}
+.row-btn {
+  padding: 0;
+  min-width: 35px;
+}
+.user-add-form {
+  display: flex;
+  margin: auto;
+}
+.user-add-form input {
+  border-style: solid;
+  border-width: 1px;
+  margin: 0 !important;
+  width: 30%;
+  padding: 5px;
+}
+.user-add-form input:last-child {
+  width: 10%;
+}
