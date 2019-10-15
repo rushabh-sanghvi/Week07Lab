@@ -118,6 +118,7 @@
               type="email" 
               name="emailEdit" 
               value="${user.email}"
+              placeholder="Email"
               readonly
               />
             <input 
