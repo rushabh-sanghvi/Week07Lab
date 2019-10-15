@@ -36,12 +36,15 @@ public class UserService {
      */
     public List<User> getAll() throws Exception {
         ArrayList<User> userList = (ArrayList<User>) db.getAll();
-        
         if (userList == null){
             throw new Exception("No users found.");
         }
-        
-        return userList;
+        ArrayList<User> activeUsers = (ArrayList<User>)db.getAll();
+        //coded by David
+        userList.stream().filter((u) -> (u.isActive())).forEachOrdered((u) -> {
+            activeUsers.add(u);
+        });
+        return activeUsers;
     }
 
     /**
