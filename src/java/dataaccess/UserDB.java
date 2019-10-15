@@ -57,7 +57,7 @@ public class UserDB {
      * @return successCount Number of records updated
      */
     public int update(User user)  {
-        String UPDATE_STATEMENT = "UPDATE User_Table set fname=? lname=? where email=?";
+        String UPDATE_STATEMENT = "UPDATE User_Table set fname=?, lname=? where email=?";
         int successCount = 0;
         try
           {

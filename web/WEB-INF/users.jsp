@@ -36,34 +36,35 @@
           <input 
             class="input-dark" 
             type="email" 
-            name="email" 
+            name="emailAdd" 
             placeholder="Email"
             required
             />
           <input 
             class="input-dark"
             type="text" 
-            name="fname" 
+            name="fnameAdd" 
             placeholder="First Name"
             required
             />
           <input 
             class="input-dark"
             type="text" 
-            name="lname" 
+            name="lnameAdd" 
             placeholder="Last Name" 
             required
             />
           <input 
             class="input-dark"
             type="password" 
-            name="password" 
+            name="passwordAdd" 
             placeholder="Password"
             required
             />
-          <input type="hidden" name="action" value="save" />
+          <input type="hidden" name="action" value="add" />
           <input class="input-primary" type="submit" value="Save"/>
         </form>
+        <br>${errorMsg}
       </div>
 
       <div class="main">
@@ -115,27 +116,27 @@
             <input 
               class="input-dark" 
               type="email" 
-              name="email" 
+              name="emailEdit" 
               value="${user.email}"
-              placeholder="Email"
+              readonly
               />
             <input 
               class="input-dark"
               type="text" 
-              name="fname" 
+              name="fnameEdit" 
               value="${user.fname}"
               placeholder="First Name"
               />
             <input 
               class="input-dark"
               type="text" 
-              name="lname" 
+              name="lnameEdit" 
               value="${user.lname}"
               placeholder="Last Name"
               />
             <input type="hidden" name="action" value="edit" />
-            <input class="mb-0 input-primary" type="submit" value="Edit"/>
-            <a href="/users?action=cancelEdit">
+            <input class="mb-0 input-primary" type="submit" value="edit"/>
+            <a href="/users?action=clearEdit">
               <input class="mb-0 input-secondary" type="button" value="Cancel" >
             </a>
           </form>
