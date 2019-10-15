@@ -52,6 +52,12 @@ public class UserDB {
         return rows;
     }
 
+    /**
+     * This method will update record of a certain user.
+     * @param user User to be updated
+     * @return successCount Count of records updated
+     * @throws InventoryDBException 
+     */
     public int update(User user) throws InventoryDBException {
         String UPDATE_STATEMENT = "UPDATE User_Table set fname=? lname=? where active = true and email=?";
         int successCount = 0;
@@ -76,6 +82,7 @@ public class UserDB {
     }
 
     /**
+     * Author Tom
      * This method queries the database for all users. Every user (dude) is put into an ArrayList of users (dudes).
      * @return ArrayList dudes - the list of users retrieved from the database.
      * @throws InventoryDBException 
@@ -102,6 +109,7 @@ public class UserDB {
     }
 
     /**
+     * Author Tom
      * This method queries the database for a particular user (dude) that has a matching email.
      * @param email - the user's email to be searched for.
      * @return User dude - the user retrieved from the database.
