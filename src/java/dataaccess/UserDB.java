@@ -52,6 +52,12 @@ public class UserDB {
         return rows;
     }
 
+    /**
+     * This method will update record of a certain user.
+     * @param user User to be updated
+     * @return successCount Count of records updated
+     * @throws InventoryDBException 
+     */
     public int update(User user) throws InventoryDBException {
         String UPDATE_STATEMENT = "UPDATE User_Table set fname=? lname=? where active = true and email=?";
         int successCount = 0;
