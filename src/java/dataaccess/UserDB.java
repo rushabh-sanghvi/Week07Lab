@@ -19,28 +19,28 @@ public class UserDB {
     
     /**
      * This method inserts user elements and return the number of rows affected.
-     * Author Euna Cho
+     * @author Euna Cho
      * @param user user
      * @return rows rows
      * @throws InventoryDBException 
      */
-    public int insert(User user) throws InventoryDBException 
+    public int insert(User user) 
     {
         int rows=0;
         try 
         {
             String preparedQuery =
                     "INSERT INTO User_Table "
-                    + "(active, email, fname, lname, password) "
+                    + "(email, fname, lname, password) "
                     + "VALUES "
-                    + "(?, ?, ?, ?, ?)";
+                    + "(?, ?, ?, ?)";
             
             PreparedStatement ps = connection.prepareStatement(preparedQuery);
-            ps.setBoolean(1, user.isActive());
-            ps.setString(2, user.getEmail());
-            ps.setString(3, user.getFname());
-            ps.setString(4, user.getLname());
-            ps.setString(5, user.getPassword());
+    
+            ps.setString(1, user.getEmail());
+            ps.setString(2, user.getFname());
+            ps.setString(3, user.getLname());
+            ps.setString(4, user.getPassword());
             
             rows = ps.executeUpdate();
             ps.close();
@@ -52,8 +52,13 @@ public class UserDB {
         return rows;
     }
 
-    public int update(User user) throws InventoryDBException {
-        String UPDATE_STATEMENT = "UPDATE User_Table set fname=? lname=? where active = true and email=?";
+    /**
+     * This method update the User record.
+     * @param user User to be updated
+     * @return successCount Number of records updated
+     */
+    public int update(User user)  {
+        String UPDATE_STATEMENT = "UPDATE User_Table set fname=? lname=? where email=?";
         int successCount = 0;
         try
           {
@@ -81,7 +86,7 @@ public class UserDB {
      * @throws InventoryDBException 
      * @throws SQLException
      */
-    public List<User> getAll() throws InventoryDBException, SQLException  {
+    public List<User> getAll() throws SQLException  {
         User dude;
         ArrayList<User> dudes = new ArrayList<>();
         
@@ -108,7 +113,7 @@ public class UserDB {
      * @throws InventoryDBException
      * @throws SQLException
      */
-    public User getUser(String email) throws InventoryDBException, SQLException {
+    public User getUser(String email) throws SQLException {
         User dude = new User();
         String preparedSQL = "SELECT active, email, fname, lname FROM user_table WHERE email = ?";
         PreparedStatement ps = connection.prepareStatement(preparedSQL);
@@ -126,7 +131,13 @@ public class UserDB {
         return dude;
     }
 
-    public boolean delete(User user) throws InventoryDBException 
+    /**
+     * This method physically deletes a user from the user_table
+     * @param user
+     * @return false returns false if there's nothing to delete
+     * @throws InventoryDBException 
+     */
+    public boolean delete(User user)  
     {
         try {
                 String DELETE_STMT = "DELETE FROM User_Table where Email = ?";

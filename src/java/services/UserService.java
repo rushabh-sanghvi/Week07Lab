@@ -5,6 +5,11 @@ import java.util.List;
 import dataaccess.UserDB;
 import java.util.ArrayList;
 
+/**
+ * 
+ * 
+ * */
+
 public class UserService {
     private UserDB db = new UserDB();
     
@@ -32,7 +37,7 @@ public class UserService {
     }
 
     /**
-     * Author David and Ayden
+     * Author David and Ayden With leadership from Ember
      * @param user
      * @return
      * @throws Exception 
@@ -42,12 +47,12 @@ public class UserService {
     }
 
     /**
-     * @Author David and Ayden
+     * @Author David and Ayden With leadership from Ember
      * 
      * Method does not call delete function because business rule to logically delete
-     * @param user
-     * @return
-     * @throws Exception 
+     * @param email the email to delete
+     * @return the int from UserDb
+     * @throws Exception - all exceptions that could be had.
      */
     public int delete(String email) throws Exception {
         User arranSmells = get(email);
@@ -56,10 +61,10 @@ public class UserService {
     }
 
      /**
-     * @Author David and Ayden
-     * @param user
-     * @return
-     * @throws Exception 
+     * @Author David and Ayden With leadership from Ember
+     * @param user the user to update
+     * @return the int from UserDb
+     * @throws Exception - all exceptions that could be had.
      */
     public int insert(User user) throws Exception {
         return db.insert(user);
