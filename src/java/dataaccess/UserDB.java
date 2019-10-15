@@ -13,10 +13,8 @@ import java.util.logging.Logger;
 
 public class UserDB {
     
-    private ConnectionPool connectionpPool = ConnectionPool.getInstance();
-    private Connection connection = connectionpPool.getConnection();
-
-    
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection = connectionPool.getConnection();
 
     public int insert(User user) throws InventoryDBException 
     {
