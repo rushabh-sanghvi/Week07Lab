@@ -16,7 +16,7 @@ public class UserService {
     }
 
     /**
-     * Author David
+     * Author David and Ayden
      * @param email
      * @param password
      * @return
@@ -27,7 +27,7 @@ public class UserService {
     }
 
     /**
-     * Author David
+     * Author David and Ayden
      * 
      * Method does not call delete function because business rule to logically delete
      * @param email
