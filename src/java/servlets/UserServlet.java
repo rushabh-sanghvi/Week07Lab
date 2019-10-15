@@ -103,10 +103,17 @@ public class UserServlet extends HttpServlet {
     }
 
     switch (action) {
-      case "add": {
+            case "add": {
+                try {
+                    us.insert(new User(email, fname, lname, password));
+                    request.setAttribute("users", us.getAll());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
 
-      }
-    }
+        getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
   }
 
   private boolean checkFalsey(String[] values) {
