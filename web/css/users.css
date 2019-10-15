@@ -81,6 +81,17 @@ body {
   border: 1px solid #393e46;
 }
 
+.error-message {
+  padding: 10px;
+  border-radius: 5px;
+  background: #dc3545;
+  position: fixed;
+  width: 200px;
+  left: calc(50vw - 100px);
+  bottom: 10px;
+  color: #eee;
+}
+
 ::-webkit-scrollbar {
   width: 5px;  /* Remove scrollbar space */
   background: transparent;  /* Optional: just make scrollbar invisible */

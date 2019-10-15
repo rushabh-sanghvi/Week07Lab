@@ -36,35 +36,34 @@
           <input 
             class="input-dark" 
             type="email" 
-            name="emailAdd" 
+            name="email" 
             placeholder="Email"
             required
             />
           <input 
             class="input-dark"
             type="text" 
-            name="fnameAdd" 
+            name="fname" 
             placeholder="First Name"
             required
             />
           <input 
             class="input-dark"
             type="text" 
-            name="lnameAdd" 
+            name="lname" 
             placeholder="Last Name" 
             required
             />
           <input 
             class="input-dark"
             type="password" 
-            name="passwordAdd" 
+            name="password" 
             placeholder="Password"
             required
             />
           <input type="hidden" name="action" value="add" />
           <input class="input-primary" type="submit" value="Save"/>
         </form>
-        <br>${errorMsg}
       </div>
 
       <div class="main">
@@ -93,7 +92,7 @@
                 </td>
                 <td class="text-center">
                   <a href="/users?action=delete&email=${user.email}" 
-                    <i class="text-danger fas fa-times" ></i>
+                     <i class="text-danger fas fa-times" ></i>
                   </a>
                 </td>
               </tr>
@@ -116,7 +115,7 @@
             <input 
               class="input-dark" 
               type="email" 
-              name="emailEdit" 
+              name="email" 
               value="${user.email}"
               placeholder="Email"
               readonly
@@ -124,26 +123,30 @@
             <input 
               class="input-dark"
               type="text" 
-              name="fnameEdit" 
+              name="fname" 
               value="${user.fname}"
               placeholder="First Name"
               />
             <input 
               class="input-dark"
               type="text" 
-              name="lnameEdit" 
+              name="lname" 
               value="${user.lname}"
               placeholder="Last Name"
               />
             <input type="hidden" name="action" value="edit" />
-            <input class="mb-0 input-primary" type="submit" value="edit"/>
+            <input class="mb-0 input-primary" type="submit" value="Edit"/>
             <a href="/users?action=clearEdit">
               <input class="mb-0 input-secondary" type="button" value="Cancel" >
             </a>
           </form>
         </div>
       </c:if>
-
     </div>
+    <c:if test="${error ne null}">
+      <div class="error-message">
+        <span>${error}</span>
+      </div>
+    </c:if>
   </body>
 </html>
