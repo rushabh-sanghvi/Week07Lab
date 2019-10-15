@@ -22,6 +22,10 @@ public class UserService {
     public User get(String email) throws Exception {
         User user = db.getUser(email);
         
+        if (user == null){
+            throw new Exception("No user found.");
+        }
+        
         return user;
     }
 
@@ -32,6 +36,10 @@ public class UserService {
      */
     public List<User> getAll() throws Exception {
         ArrayList<User> userList = (ArrayList<User>) db.getAll();
+        
+        if (userList == null){
+            throw new Exception("No users found.");
+        }
         
         return userList;
     }
@@ -44,6 +52,11 @@ public class UserService {
      */
     public int update(User user) throws Exception {
         int i = db.update(user);
+        
+        if (i == 0){
+            throw new Exception("No user found.");
+        }
+        
         return i;
     }
 
@@ -58,7 +71,13 @@ public class UserService {
     public int delete(String email) throws Exception {
         User arranSmells = get(email);
         arranSmells.setActive(false);
-        return db.update(arranSmells);
+        int i = db.update(arranSmells);
+        
+        if (i == 0){
+            throw new Exception("No user found");
+        }
+        
+        return i;
     }
 
      /**
@@ -68,7 +87,13 @@ public class UserService {
      * @throws Exception - all exceptions that could be had.
      */
     public int insert(User user) throws Exception {
-        return db.insert(user);
+        int i = db.insert(user);
+        
+        if (i == 0){
+            throw new Exception("User could not be added.");
+        }
+        
+        return i;
     }
 
 }
