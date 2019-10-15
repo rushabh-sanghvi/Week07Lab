@@ -19,7 +19,7 @@ public class UserDB {
     
     /**
      * This method inserts user elements and return the number of rows affected.
-     * Author Euna Cho
+     * @author Euna Cho
      * @param user user
      * @return rows rows
      * @throws InventoryDBException 
@@ -31,16 +31,16 @@ public class UserDB {
         {
             String preparedQuery =
                     "INSERT INTO User_Table "
-                    + "(active, email, fname, lname, password) "
+                    + "(email, fname, lname, password) "
                     + "VALUES "
-                    + "(?, ?, ?, ?, ?)";
+                    + "(?, ?, ?, ?)";
             
             PreparedStatement ps = connection.prepareStatement(preparedQuery);
-            ps.setBoolean(1, user.isActive());
-            ps.setString(2, user.getEmail());
-            ps.setString(3, user.getFname());
-            ps.setString(4, user.getLname());
-            ps.setString(5, user.getPassword());
+    
+            ps.setString(1, user.getEmail());
+            ps.setString(2, user.getFname());
+            ps.setString(3, user.getLname());
+            ps.setString(4, user.getPassword());
             
             rows = ps.executeUpdate();
             ps.close();
@@ -131,6 +131,12 @@ public class UserDB {
         return dude;
     }
 
+    /**
+     * This method physically deletes a user from the user_table
+     * @param user
+     * @return false returns false if there's nothing to delete
+     * @throws InventoryDBException 
+     */
     public boolean delete(User user)  
     {
         try {
