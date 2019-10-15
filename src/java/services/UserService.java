@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * */
 
 public class UserService {
-    private UserDB db = new UserDB();
+    private final UserDB db = new UserDB();
     
     /**
      * This method calls the getUser() method in UserDB.
@@ -48,7 +48,7 @@ public class UserService {
     }
 
     /**
-     * Author David and Ayden With leadership from Ember
+     * @Author David and Ayden With leadership from Ember
      * @param user
      * @return
      * @throws Exception 

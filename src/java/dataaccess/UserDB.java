@@ -57,14 +57,15 @@ public class UserDB {
      * @return successCount Number of records updated
      */
     public int update(User user)  {
-        String UPDATE_STATEMENT = "UPDATE User_Table set fname=?, lname=? where email=?";
+        String UPDATE_STATEMENT = "UPDATE User_Table set active=?, fname=?, lname=? where email=?";
         int successCount = 0;
         try
           {
             PreparedStatement statement = connection.prepareStatement(UPDATE_STATEMENT);
-            statement.setString(1, user.getFname());
-            statement.setString(2, user.getLname());
-            statement.setString(3, user.getEmail());
+            statement.setString(1, user.isActive() +"");
+            statement.setString(2, user.getFname());
+            statement.setString(3, user.getLname());
+            statement.setString(4, user.getEmail());
             
             successCount = statement.executeUpdate();
             statement.close();
