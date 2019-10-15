@@ -98,7 +98,7 @@
               </tr>
             </c:forEach>
             <tr>
-              <c:if test="${users eq null}">
+              <c:if test="${empty users}">
                 <td class="text-center" colspan="5">
                   <h5>No Users Found</h5>
                 </td>

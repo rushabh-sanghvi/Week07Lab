@@ -65,9 +65,7 @@ public class UserServlet extends HttpServlet {
     }
 
     try {
-      List<User> users = us.getAll();
-      users = users.isEmpty() ? null : users;
-      request.setAttribute("users", users);
+      request.setAttribute("users", us.getAll());
     } catch (Exception e) {
       request.setAttribute("error", e.getMessage());
     }
@@ -118,14 +116,13 @@ public class UserServlet extends HttpServlet {
     }
 
     try {
-      List<User> users = us.getAll();
-      users = users.isEmpty() ? null : users;
-      request.setAttribute("users", users);
+      request.setAttribute("users", us.getAll());
     } catch (Exception ex) {
       request.setAttribute("error", ex.getMessage());
     }
 
-    getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
+    getServletContext().getRequestDispatcher("/WEB-INF/users.jsp")
+            .forward(request, response);
   }
 
   /**
