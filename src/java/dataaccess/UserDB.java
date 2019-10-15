@@ -53,7 +53,7 @@ public class UserDB {
     }
 
     public int update(User user)  {
-        String UPDATE_STATEMENT = "UPDATE User_Table set fname=? lname=? where active = true and email=?";
+        String UPDATE_STATEMENT = "UPDATE User_Table set fname=? lname=? where email=?";
         int successCount = 0;
         try
           {
