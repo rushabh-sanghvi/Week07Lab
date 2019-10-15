@@ -32,32 +32,37 @@
 
       <div class="user-add-form">
         <h2 class="text-center">Add User</h2>
-        <form>
+        <form action="users" method="post">
           <input 
             class="input-dark" 
             type="email" 
             name="email" 
             placeholder="Email"
+            required
             />
           <input 
             class="input-dark"
             type="text" 
             name="fname" 
             placeholder="First Name"
+            required
             />
           <input 
             class="input-dark"
             type="text" 
             name="lname" 
             placeholder="Last Name" 
+            required
             />
           <input 
             class="input-dark"
             type="password" 
             name="password" 
             placeholder="Password"
+            required
             />
-          <input class="input-primary" type="button" value="Save"/>
+          <input type="hidden" name="action" value="save" />
+          <input class="input-primary" type="submit" value="Save"/>
         </form>
       </div>
 
@@ -80,13 +85,13 @@
                 <td>${user.fname}</td>
                 <td>${user.lname}</td>
                 <td class="text-center">
-                  <a href="/users?action=edit&email=${user.email}&fname=${user.fname}&lname=${user.lname}" 
+                  <a href="/users?action=edit&email=${user.email}" 
                      class="row-btn">
                     <i class="text-secondary fas fa-pencil-alt"></i>
                   </a>
                 </td>
                 <td class="text-center">
-                  <a href="#" class="row-btn">
+                  <a href="/users?action=delete&email=${user.email}" 
                     <i class="text-danger fas fa-times" ></i>
                   </a>
                 </td>
@@ -129,7 +134,7 @@
               placeholder="Last Name"
               />
             <input type="hidden" name="action" value="edit" />
-            <input class="mb-0 input-primary" type="button" value="Edit"/>
+            <input class="mb-0 input-primary" type="submit" value="Edit"/>
             <a href="/users?action=cancelEdit">
               <input class="mb-0 input-secondary" type="button" value="Cancel" >
             </a>
