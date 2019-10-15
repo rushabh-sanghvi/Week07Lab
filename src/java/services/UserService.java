@@ -43,7 +43,8 @@ public class UserService {
      * @throws Exception 
      */
     public int update(User user) throws Exception {
-        return db.update(user);
+        int i = db.update(user);
+        return i;
     }
 
     /**
