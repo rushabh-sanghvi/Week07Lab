@@ -9,6 +9,7 @@ public class UserService {
     private UserDB db = new UserDB();
     
     /**
+     * Author Tom
      * This method calls the getUser() method in UserDB.
      * @param email - the user's email to identify them in the database.
      * @return user - the user that is requested.
@@ -21,6 +22,7 @@ public class UserService {
     }
 
     /**
+     * Author Tom
      * This method calls the getAll() method from UserDB.
      * @return userList - a list of users from the database.
      * @throws Exception - all exceptions that could be had.
