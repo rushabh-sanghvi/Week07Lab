@@ -27,6 +27,6 @@ INSERT INTO user_table (active, email, fname, lname, password)
     VALUES (TRUE, 'steven.wong01@sait.edu.ca', 'Steven', 'Wong', 'password');
 
 INSERT INTO user_table (active, email, fname, lname, password)
-    VALUES(TRUE, 'alex@gmail.com', 'Alex', 'Carvajal', 'sdfsdf');
+    VALUES(FALSE, 'alex@gmail.com', 'Alex', 'Carvajal', 'password');
 
 SELECT * FROM user_table;
