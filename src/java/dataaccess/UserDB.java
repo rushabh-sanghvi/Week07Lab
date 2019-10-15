@@ -126,6 +126,12 @@ public class UserDB {
         return dude;
     }
 
+    /**
+     * This method physically deletes a user from the user_table
+     * @param user
+     * @return false returns false if there's nothing to delete
+     * @throws InventoryDBException 
+     */
     public boolean delete(User user)  
     {
         try {
