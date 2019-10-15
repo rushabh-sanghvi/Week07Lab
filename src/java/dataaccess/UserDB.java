@@ -52,6 +52,11 @@ public class UserDB {
         return rows;
     }
 
+    /**
+     * This method update the User record.
+     * @param user User to be updated
+     * @return successCount Number of records updated
+     */
     public int update(User user)  {
         String UPDATE_STATEMENT = "UPDATE User_Table set fname=? lname=? where email=?";
         int successCount = 0;
