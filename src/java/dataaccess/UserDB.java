@@ -13,9 +13,9 @@ import java.util.logging.Logger;
 
 
 public class UserDB {
-    private Connection connection;
     
-    private static final String UPDATE_STATEMENT = "UPDATE User_Table set fname=? lname=? where active = true and email=?";
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection = connectionPool.getConnection();
 
     public int insert(User user) throws InventoryDBException 
     {
@@ -46,7 +46,7 @@ public class UserDB {
     }
 
     public int update(User user) throws InventoryDBException {
-        
+        String UPDATE_STATEMENT = "UPDATE User_Table set fname=? lname=? where active = true and email=?";
         int successCount = 0;
         try
           {
@@ -62,6 +62,8 @@ public class UserDB {
           {
             Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
           }
+        
+        
         return successCount;
         
     }
