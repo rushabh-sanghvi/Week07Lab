@@ -119,7 +119,20 @@ public class UserDB {
         return dude;
     }
 
-    public int delete(User user) throws InventoryDBException {
-        return 0;
+    public boolean delete(User user) throws InventoryDBException 
+    {
+        try {
+                String DELETE_STMT = "DELETE FROM User_Table where Email = ?";
+                PreparedStatement prepare = connection.prepareStatement(DELETE_STMT);
+                prepare.setString(1, user.getEmail());            
+                
+                int rowCount = prepare.executeUpdate();
+                prepare.close();
+                return rowCount == 1;
+                
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 }
