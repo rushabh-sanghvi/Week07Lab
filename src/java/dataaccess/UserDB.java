@@ -92,12 +92,11 @@ public class UserDB {
         PreparedStatement ps = connection.prepareStatement(preparedSQL);
         ResultSet product = ps.executeQuery();
         
-        while(product.next()){
-            boolean boo = product.getBoolean(1);
-            String userEmail = product.getString(2);
-            String fname = product.getString(3);
-            String lname = product.getString(4);
-            dude = new User(boo, userEmail, fname, lname, null);
+        while(product.next()) {
+            String userEmail = product.getString(1);
+            String fname = product.getString(2);
+            String lname = product.getString(3);
+            dude = new User(userEmail, fname, lname, null);
             dudes.add(dude);
         }
 
@@ -112,17 +111,16 @@ public class UserDB {
      */
     public User getUser(String email) throws SQLException {
         User dude = new User();
-        String preparedSQL = "SELECT active, email, fname, lname FROM user_table WHERE email = ?";
+        String preparedSQL = "SELECT email, fname, lname FROM user_table WHERE email = ?";
         PreparedStatement ps = connection.prepareStatement(preparedSQL);
         ps.setString(1, email);
         ResultSet product = ps.executeQuery();
         
-        while(product.next()){
-            boolean boo = product.getBoolean(1);
-            String userEmail = product.getString(2);
-            String fname = product.getString(3);
-            String lname = product.getString(4);
-            dude = new User(boo, userEmail, fname, lname, null);
+        while(product.next()) {
+            String userEmail = product.getString(1);
+            String fname = product.getString(2);
+            String lname = product.getString(3);
+            dude = new User(userEmail, fname, lname, null);
         }
 
         return dude;
