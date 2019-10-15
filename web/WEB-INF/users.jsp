@@ -6,7 +6,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Manage Users</title>
+    <title>View Users</title>
     <link 
       rel="stylesheet" 
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
@@ -30,29 +30,39 @@
         </ul>
       </nav>
 
-      <div class="main">
-        <h2 class="text-center">Manage Users</h2>
-        <form class="user-add-form">
+      <div class="user-add-form">
+        <h2 class="text-center">Add User</h2>
+        <form>
           <input 
-            class="mb-3 bg-dark text-light border-secondary" 
+            class="input-dark" 
             type="email" 
             name="email" 
             placeholder="Email"
             />
           <input 
-            class="mb-3 bg-dark text-light border-secondary" 
+            class="input-dark"
             type="text" 
             name="fname" 
             placeholder="First Name"
             />
           <input 
-            class="mb-3 bg-dark text-light border-secondary" 
+            class="input-dark"
             type="text" 
             name="lname" 
-            placeholder="Last Name"
+            placeholder="Last Name" 
             />
-          <input class="btn-primary" type="button" value="Save"/>
+          <input 
+            class="input-dark"
+            type="password" 
+            name="password" 
+            placeholder="Password"
+            />
+          <input class="input-primary" type="button" value="Save"/>
         </form>
+      </div>
+
+      <div class="main">
+        <h2 class="text-center">Manage Users</h2>
         <table class="table table-dark">
           <thead>
             <tr>
@@ -64,36 +74,69 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>test Email</td>
-              <td>Test fName</td>
-              <td>Test lName</td>
-              <td class="text-center">
-                <a href="#" class="btn row-btn">
-                  <i class="text-secondary fas fa-pencil-alt"></i>
-                </a>
-              </td>
-              <td class="text-center">
-                <a href="#" class="btn row-btn">
-                  <i class="text-danger fas fa-times" ></i>
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <c:forEach items="${users}" var="user">
+            <c:forEach items="${users}" var="user">
+              <tr>
                 <td>${user.email}</td>
                 <td>${user.fname}</td>
                 <td>${user.lname}</td>
-                <td><a href="#" class="row-btn">Edit</a></td>
-                <td><a href="#" class="row-btn">Delete</a></td>
-              </c:forEach>
+                <td class="text-center">
+                  <a href="/users?action=edit&email=${user.email}&fname=${user.fname}&lname=${user.lname}" 
+                     class="row-btn">
+                    <i class="text-secondary fas fa-pencil-alt"></i>
+                  </a>
+                </td>
+                <td class="text-center">
+                  <a href="#" class="row-btn">
+                    <i class="text-danger fas fa-times" ></i>
+                  </a>
+                </td>
+              </tr>
+            </c:forEach>
+            <tr>
               <c:if test="${users eq null}">
-                <td class="text-center" colspan="5"><h5>No Users Found</h5></td>
+                <td class="text-center" colspan="5">
+                  <h5>No Users Found</h5>
+                </td>
               </c:if>
             </tr>
           </tbody>
         </table>
       </div>
+
+      <c:if test="${edit eq true}">
+        <div class="user-edit-form">
+          <h2 class="text-center">Edit User</h2>
+          <form action="users" method="post">
+            <input 
+              class="input-dark" 
+              type="email" 
+              name="email" 
+              value="${user.email}"
+              placeholder="Email"
+              />
+            <input 
+              class="input-dark"
+              type="text" 
+              name="fname" 
+              value="${user.fname}"
+              placeholder="First Name"
+              />
+            <input 
+              class="input-dark"
+              type="text" 
+              name="lname" 
+              value="${user.lname}"
+              placeholder="Last Name"
+              />
+            <input type="hidden" name="action" value="edit" />
+            <input class="mb-0 input-primary" type="button" value="Edit"/>
+            <a href="/users?action=cancelEdit">
+              <input class="mb-0 input-secondary" type="button" value="Cancel" >
+            </a>
+          </form>
+        </div>
+      </c:if>
+
     </div>
   </body>
 </html>
