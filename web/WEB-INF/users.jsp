@@ -61,7 +61,7 @@
             placeholder="Password"
             required
             />
-          <input type="hidden" name="action" value="save" />
+          <input type="hidden" name="action" value="add" />
           <input class="input-primary" type="submit" value="Save"/>
         </form>
       </div>
