@@ -18,8 +18,32 @@ public class UserDB {
 
     
 
-    public int insert(User user) throws InventoryDBException {
-        return 0;
+    public int insert(User user) throws InventoryDBException 
+    {
+        int rows=0;
+        try 
+        {
+            String preparedQuery =
+                    "INSERT INTO User_Table "
+                    + "(active, email, fname, lname, password) "
+                    + "VALUES "
+                    + "(?, ?, ?, ?, ?)";
+            
+            PreparedStatement ps = connection.prepareStatement(preparedQuery);
+            ps.setBoolean(1, user.isActive());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getFname());
+            ps.setString(4, user.getLname());
+            ps.setString(5, user.getPassword());
+            
+            rows = ps.executeUpdate();
+            ps.close();
+            
+        } catch (SQLException ex) 
+        {
+            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rows;
     }
 
     public int update(User user) throws InventoryDBException {
@@ -49,6 +73,7 @@ public class UserDB {
      * This method queries the database for all users. Every user (dude) is put into an ArrayList of users (dudes).
      * @return ArrayList dudes - the list of users retrieved from the database.
      * @throws InventoryDBException 
+     * @throws SQLException
      */
     public List<User> getAll() throws InventoryDBException, SQLException  {
         User dude;
@@ -74,7 +99,8 @@ public class UserDB {
      * This method queries the database for a particular user (dude) that has a matching email.
      * @param email - the user's email to be searched for.
      * @return User dude - the user retrieved from the database.
-     * @throws InventoryDBException 
+     * @throws InventoryDBException
+     * @throws SQLException
      */
     public User getUser(String email) throws InventoryDBException, SQLException {
         User dude = new User();
