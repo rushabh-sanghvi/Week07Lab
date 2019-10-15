@@ -17,6 +17,7 @@ public class User implements Serializable
     
     public User(String email, String fname, String lname, String password) 
     {
+      this.active= true;
         this.email = email;
         this.fname = fname;
         this.lname = lname;
@@ -72,4 +73,10 @@ public class User implements Serializable
     {
         this.password = password;
     }
+
+  @Override
+  public String toString() {
+    return "User{" + "active=" + active + ", email=" + email + ", fname=" + fname + ", lname=" + lname + ", password=" + password + '}';
+  }
+    
 }
