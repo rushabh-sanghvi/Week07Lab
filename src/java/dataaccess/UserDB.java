@@ -59,7 +59,7 @@ public class UserDB {
         int successCount = 0;
         try {
             PreparedStatement statement = connection.prepareStatement(UPDATE_STATEMENT);
-            statement.setString(1, user.isActive() +"");
+            statement.setBoolean(1, user.isActive());
             statement.setString(2, user.getFname());
             statement.setString(3, user.getLname());
             statement.setString(4, user.getEmail());
@@ -112,20 +112,22 @@ public class UserDB {
      * @throws SQLException
      */
     public User getUser(String email) throws SQLException {
-        User dude = new User();
-        String preparedSQL = "SELECT email, fname, lname FROM user_table WHERE email = ?";
+        User user = new User();
+        String preparedSQL = "SELECT active, email, fname, lname FROM user_table WHERE email = ?";
         PreparedStatement ps = connection.prepareStatement(preparedSQL);
         ps.setString(1, email);
         ResultSet product = ps.executeQuery();
 
         while (product.next()) {
-            String userEmail = product.getString(1);
-            String fname = product.getString(2);
-            String lname = product.getString(3);
-            dude = new User(userEmail, fname, lname, null);
+            boolean active = product.getBoolean(1);
+            String userEmail = product.getString(2);
+            String fname = product.getString(3);
+            String lname = product.getString(4);
+            user = new User(userEmail, fname, lname, null);
+            user.setActive(active);
         }
 
-        return dude;
+        return user;
     }
 
     /**
@@ -137,7 +139,7 @@ public class UserDB {
      */
     public boolean delete(User user) {
         try {
-            String DELETE_STMT = "DELETE FROM User_Table where Email = ?";
+            String DELETE_STMT = "DELETE FROM User_Table where email = ?";
             PreparedStatement prepare = connection.prepareStatement(DELETE_STMT);
             prepare.setString(1, user.getEmail());
 
