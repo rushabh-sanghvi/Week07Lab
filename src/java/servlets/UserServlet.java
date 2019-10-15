@@ -1,8 +1,7 @@
 package servlets;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -66,7 +65,9 @@ public class UserServlet extends HttpServlet {
     }
 
     try {
-      request.setAttribute("users", us.getAll());
+      List<User> users = us.getAll();
+      users = users.isEmpty() ? null : users;
+      request.setAttribute("users", users);
     } catch (Exception e) {
       request.setAttribute("error", e.getMessage());
     }
@@ -117,7 +118,9 @@ public class UserServlet extends HttpServlet {
     }
 
     try {
-      request.setAttribute("users", us.getAll());
+      List<User> users = us.getAll();
+      users = users.isEmpty() ? null : users;
+      request.setAttribute("users", users);
     } catch (Exception ex) {
       request.setAttribute("error", ex.getMessage());
     }
