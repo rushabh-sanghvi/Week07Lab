@@ -88,7 +88,7 @@ public class UserDB {
         User dude;
         ArrayList<User> dudes = new ArrayList<>();
         
-        String preparedSQL = "SELECT active, email, fname, lname FROM user_table";
+        String preparedSQL = "SELECT email, fname, lname FROM user_table";
         PreparedStatement ps = connection.prepareStatement(preparedSQL);
         ResultSet product = ps.executeQuery();
         
