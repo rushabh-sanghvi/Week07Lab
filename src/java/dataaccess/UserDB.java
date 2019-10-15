@@ -125,6 +125,7 @@ public class UserDB {
 
         return dude;
     }
+    
 
     /**
      * This method physically deletes a user from the user_table
