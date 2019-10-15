@@ -10,7 +10,7 @@ CREATE TABLE if not exists user_table (
     email VARCHAR(40) NOT NULL UNIQUE,
     fname VARCHAR(20),
     lname VARCHAR(20),
-    password VARCHAR(8),
+    password ENUM('password'),
     CONSTRAINT user_email_pk PRIMARY KEY (email)
 );
 
