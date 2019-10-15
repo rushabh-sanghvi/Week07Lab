@@ -24,7 +24,7 @@ public class UserDB {
      * @return rows rows
      * @throws InventoryDBException 
      */
-    public int insert(User user) throws InventoryDBException 
+    public int insert(User user) 
     {
         int rows=0;
         try 
@@ -52,7 +52,7 @@ public class UserDB {
         return rows;
     }
 
-    public int update(User user) throws InventoryDBException {
+    public int update(User user)  {
         String UPDATE_STATEMENT = "UPDATE User_Table set fname=? lname=? where active = true and email=?";
         int successCount = 0;
         try
@@ -81,7 +81,7 @@ public class UserDB {
      * @throws InventoryDBException 
      * @throws SQLException
      */
-    public List<User> getAll() throws InventoryDBException, SQLException  {
+    public List<User> getAll() throws SQLException  {
         User dude;
         ArrayList<User> dudes = new ArrayList<>();
         
@@ -108,7 +108,7 @@ public class UserDB {
      * @throws InventoryDBException
      * @throws SQLException
      */
-    public User getUser(String email) throws InventoryDBException, SQLException {
+    public User getUser(String email) throws SQLException {
         User dude = new User();
         String preparedSQL = "SELECT active, email, fname, lname FROM user_table WHERE email = ?";
         PreparedStatement ps = connection.prepareStatement(preparedSQL);
@@ -126,7 +126,7 @@ public class UserDB {
         return dude;
     }
 
-    public boolean delete(User user) throws InventoryDBException 
+    public boolean delete(User user)  
     {
         try {
                 String DELETE_STMT = "DELETE FROM User_Table where Email = ?";
