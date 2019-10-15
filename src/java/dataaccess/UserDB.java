@@ -16,7 +16,14 @@ public class UserDB {
     
     ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = connectionPool.getConnection();
-
+    
+    /**
+     * This method inserts user elements and return the number of rows affected.
+     * Author Euna Cho
+     * @param user user
+     * @return rows rows
+     * @throws InventoryDBException 
+     */
     public int insert(User user) throws InventoryDBException 
     {
         int rows=0;
