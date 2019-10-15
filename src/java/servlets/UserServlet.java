@@ -36,10 +36,11 @@ public class UserServlet extends HttpServlet {
         action = action == null ? "" : action;
 
         switch (action) {
-            case "clearEdit":
+            case "clearEdit": {
                 request.setAttribute("edit", true);
                 request.setAttribute("user", null);
                 break;
+            }
             case "edit": {
                 if (checkFalsey(new String[]{email})) {
                     request.setAttribute("edit", true);
@@ -54,18 +55,19 @@ public class UserServlet extends HttpServlet {
                 }
                 break;
             }
-            case "delete":
+            case "delete": {
                 if (checkFalsey(new String[]{email})) {
                     try {
                         us.delete(email);
                     } catch (Exception e) {
-                        request.setAttribute("error", "Could not delete user.");
+                        request.setAttribute("errorMsg", "Could not delete user.");
                     }
                 } else {
-                    request.setAttribute("error", "Could not delete user.");
+                    request.setAttribute("errorMsg", "Could not delete user.");
                     return;
                 }
                 break;
+            }
         }
 
         try {
@@ -108,7 +110,9 @@ public class UserServlet extends HttpServlet {
                 }
 
                 try {
-                    us.insert(new User(values[0], values[1], values[2], values[3]));
+                    User user = new User(values[0], values[1], values[2], values[3]);
+                    user.setActive(true);
+                    us.insert(user);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -126,7 +130,9 @@ public class UserServlet extends HttpServlet {
                 }
 
                 try {
-                    us.update(new User(values[0], values[1], values[2], "password"));
+                    User user = new User(values[0], values[1], values[2], "password");
+                    user.setActive(true);
+                    us.update(user);
                 } catch (Exception ex) {
                     request.setAttribute("errorMsg", ex.getMessage());
                 }
@@ -141,6 +147,11 @@ public class UserServlet extends HttpServlet {
         getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
     }
 
+    /**
+     * Goes through values and ensures they are all not null or empty
+     * @param values values
+     * @return boolean if there is an empty value or not
+     */
     private boolean checkFalsey(String[] values) {
         // check each elemenet in array for null or empty string
         // return false if one is found

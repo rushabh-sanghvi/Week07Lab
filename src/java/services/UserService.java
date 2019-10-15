@@ -39,11 +39,13 @@ public class UserService {
         if (userList == null){
             throw new Exception("No users found.");
         }
-        ArrayList<User> activeUsers = (ArrayList<User>)db.getAll();
-        //coded by David
-        userList.stream().filter((u) -> (u.isActive())).forEachOrdered((u) -> {
-            activeUsers.add(u);
-        });
+        ArrayList<User> activeUsers = new ArrayList<>();
+        
+        for (int i = 0; i < userList.size(); i++) {
+            if(userList.get(i).isActive()) {
+                activeUsers.add(userList.get(i));
+            }
+        }
         return activeUsers;
     }
 
@@ -72,9 +74,9 @@ public class UserService {
      * @throws Exception - all exceptions that could be had.
      */
     public int delete(String email) throws Exception {
-        User arranSmells = get(email);
-        arranSmells.setActive(false);
-        int i = db.update(arranSmells);
+        User user = get(email);
+        user.setActive(false);
+        int i = db.update(user);
         
         if (i == 0){
             throw new Exception("No user found");
