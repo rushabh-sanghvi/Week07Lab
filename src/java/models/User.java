@@ -14,18 +14,9 @@ public class User implements Serializable
     {
         active=true;
     }
-
-  public User(String email, String fname, String lname, String password) {
-    this.email = email;
-    this.fname = fname;
-    this.lname = lname;
-    this.password = password;
-    this.active = true;
-  }
     
-    public User(boolean active, String email, String fname, String lname, String password) 
+    public User(String email, String fname, String lname, String password) 
     {
-        this.active = active;
         this.email = email;
         this.fname = fname;
         this.lname = lname;
