@@ -1,6 +1,5 @@
 package services;
 
-import dataaccess.UserDB;
 import models.User;
 import java.util.List;
 import dataaccess.UserDB;
@@ -34,29 +33,35 @@ public class UserService {
 
     /**
      * Author David and Ayden
-     * @param email
-     * @param password
+     * @param user
      * @return
      * @throws Exception 
      */
-    public int update(String email, String password) throws Exception {
-        return 0;
+    public int update(User user) throws Exception {
+        return db.update(user);
     }
 
     /**
      * Author David and Ayden
      * 
      * Method does not call delete function because business rule to logically delete
-     * @param email
+     * @param user
      * @return
      * @throws Exception 
      */
-    public int delete(String email) throws Exception {
-        return 0;
+    public int delete(User user) throws Exception {
+        user.setActive(false);
+        return db.update(user);
     }
 
-    public int insert(String email, String password) throws Exception {
-        return 0;
+        /**
+     * Author David and Ayden
+     * @param user
+     * @return
+     * @throws Exception 
+     */
+    public int insert(User user) throws Exception {
+        return db.insert(user);
     }
 
 }
