@@ -1,8 +1,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -42,7 +40,7 @@ public class UserServlet extends HttpServlet {
                 break;
             }
             case "edit": {
-                if (checkFalsey(new String[]{email})) {
+                if (checkValuesNotNull(new String[]{email})) {
                     request.setAttribute("edit", true);
                     try {
                         request.setAttribute("user", us.get(email));
@@ -56,7 +54,7 @@ public class UserServlet extends HttpServlet {
                 break;
             }
             case "delete": {
-                if (checkFalsey(new String[]{email})) {
+                if (checkValuesNotNull(new String[]{email})) {
                     try {
                         us.delete(email);
                     } catch (Exception e) {
@@ -104,7 +102,7 @@ public class UserServlet extends HttpServlet {
 
                 String[] values = new String[]{emailAdd, fnameAdd, lnameAdd, passwordAdd};
 
-                if (!checkFalsey(values)) {
+                if (!checkValuesNotNull(values)) {
                     response.sendRedirect("users");
                     return;
                 }
@@ -124,7 +122,7 @@ public class UserServlet extends HttpServlet {
 
                 String[] values = new String[]{emailEdit, fnameEdit, lnameEdit};
 
-                if (!checkFalsey(values)) {
+                if (!checkValuesNotNull(values)) {
                     response.sendRedirect("users");
                     return;
                 }
@@ -152,7 +150,7 @@ public class UserServlet extends HttpServlet {
      * @param values values
      * @return boolean if there is an empty value or not
      */
-    private boolean checkFalsey(String[] values) {
+    private boolean checkValuesNotNull(String[] values) {
         // check each elemenet in array for null or empty string
         // return false if one is found
         for (String s : values) {
