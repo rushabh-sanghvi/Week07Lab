@@ -6,7 +6,7 @@ import dataaccess.UserDB;
 import java.util.ArrayList;
 
 public class UserService {
-    private final UserDB db = new UserDB();
+    private UserDB db = new UserDB();
     
     /**
      * This method calls the getUser() method in UserDB.
@@ -42,20 +42,21 @@ public class UserService {
     }
 
     /**
-     * Author David and Ayden
+     * @Author David and Ayden
      * 
      * Method does not call delete function because business rule to logically delete
      * @param user
      * @return
      * @throws Exception 
      */
-    public int delete(User user) throws Exception {
-        user.setActive(false);
-        return db.update(user);
+    public int delete(String email) throws Exception {
+        User arranSmells = get(email);
+        arranSmells.setActive(false);
+        return db.update(arranSmells);
     }
 
-        /**
-     * Author David and Ayden
+     /**
+     * @Author David and Ayden
      * @param user
      * @return
      * @throws Exception 
