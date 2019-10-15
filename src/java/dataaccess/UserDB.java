@@ -12,16 +12,42 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class UserDB {
-    private Connection connection;
     
-    private static final String UPDATE_STATEMENT = "UPDATE User_Table set fname=? lname=? where active = true and email=?";
+    private ConnectionPool connectionpPool = ConnectionPool.getInstance();
+    private Connection connection = connectionpPool.getConnection();
 
-    public int insert(User user) throws InventoryDBException {
-        return 0;
+    
+
+    public int insert(User user) throws InventoryDBException 
+    {
+        int rows=0;
+        try 
+        {
+            String preparedQuery =
+                    "INSERT INTO User_Table "
+                    + "(active, email, fname, lname, password) "
+                    + "VALUES "
+                    + "(?, ?, ?, ?, ?)";
+            
+            PreparedStatement ps = connection.prepareStatement(preparedQuery);
+            ps.setBoolean(1, user.isActive());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getFname());
+            ps.setString(4, user.getLname());
+            ps.setString(5, user.getPassword());
+            
+            rows = ps.executeUpdate();
+            ps.close();
+            
+        } catch (SQLException ex) 
+        {
+            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rows;
     }
 
     public int update(User user) throws InventoryDBException {
-        
+        String UPDATE_STATEMENT = "UPDATE User_Table set fname=? lname=? where active = true and email=?";
         int successCount = 0;
         try
           {
@@ -37,6 +63,8 @@ public class UserDB {
           {
             Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
           }
+        
+        
         return successCount;
         
     }
