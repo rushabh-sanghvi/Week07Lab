@@ -52,10 +52,15 @@ public class UserServlet extends HttpServlet {
         break;
       }
       case "delete":
-        try {
-          us.delete(email);
-        } catch (Exception e) {
+        if (checkFalsey(new String[]{email})) {
+          try {
+            us.delete(email);
+          } catch (Exception e) {
+            request.setAttribute("error", "Could not delete user.");
+          }
+        } else {
           request.setAttribute("error", "Could not delete user.");
+          return;
         }
         break;
     }
