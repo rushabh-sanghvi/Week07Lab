@@ -3,18 +3,12 @@ package dataaccess;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import models.User;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class UserDB {
-
-    ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection = connectionPool.getConnection();
 
     /**
      * This method inserts user elements and return the number of rows affected.
@@ -22,10 +16,17 @@ public class UserDB {
      * @author Euna Cho
      * @param user user
      * @return rows rows
+     * @throws java.sql.SQLException
      */
-    public int insert(User user) {
+    public int insert(User user) throws SQLException {
+
+        ConnectionPool connectionPool = null;
+        Connection connection = null;
+
         int rows = 0;
         try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
             String preparedQuery
                     = "INSERT INTO User_Table "
                     + "(email, fname, lname, password) "
@@ -41,11 +42,10 @@ public class UserDB {
 
             rows = ps.executeUpdate();
             ps.close();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
+            return rows;
+        } finally {
+            connectionPool.freeConnection(connection);
         }
-        return rows;
     }
 
     /**
@@ -53,54 +53,67 @@ public class UserDB {
      *
      * @param user User to be updated
      * @return successCount Number of records updated
+     * @throws java.sql.SQLException
      */
-    public int update(User user)  {
-        String UPDATE_STATEMENT = "UPDATE User_Table set active=?, fname=?, lname=? where email=?";
-        int successCount = 0;
+    public int update(User user) throws SQLException {
+        ConnectionPool connectionPool = null;
+        Connection connection = null;
         try {
-            PreparedStatement statement = connection.prepareStatement(UPDATE_STATEMENT);
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+
+            String preparedQuery = "UPDATE User_Table set active=?, fname=?, lname=? where email=?";
+            int successCount = 0;
+
+            PreparedStatement statement = connection.prepareStatement(preparedQuery);
             statement.setBoolean(1, user.isActive());
             statement.setString(2, user.getFname());
             statement.setString(3, user.getLname());
             statement.setString(4, user.getEmail());
-            
+
             successCount = statement.executeUpdate();
             statement.close();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
+            return successCount;
+        } finally {
+            connectionPool.freeConnection(connection);
         }
-
-        return successCount;
 
     }
 
     /**
-     * This method queries the database for all users. Every user is put
-     * into an ArrayList of users
+     * This method queries the database for all users. Every user is put into an
+     * ArrayList of users
      *
      * @return ArrayList users - the list of users retrieved from the database.
      * @throws SQLException
      */
     public List<User> getAll() throws SQLException {
-        User user;
-        ArrayList<User> users = new ArrayList<>();
+        ConnectionPool connectionPool = null;
+        Connection connection = null;
+        try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+            User user;
+            ArrayList<User> users = new ArrayList<>();
 
-        String preparedSQL = "SELECT active, email, fname, lname FROM user_table";
-        PreparedStatement ps = connection.prepareStatement(preparedSQL);
-        ResultSet product = ps.executeQuery();
+            String preparedQuery = "SELECT active, email, fname, lname FROM user_table";
+            PreparedStatement ps = connection.prepareStatement(preparedQuery);
+            ResultSet rs = ps.executeQuery();
 
-        while (product.next()) {
-            boolean active = product.getBoolean(1);
-            String userEmail = product.getString(2);
-            String fname = product.getString(3);
-            String lname = product.getString(4);
-            user = new User(userEmail, fname, lname, null);
-            user.setActive(active);
-            users.add(user);
+            while (rs.next()) {
+                boolean active = rs.getBoolean(1);
+                String userEmail = rs.getString(2);
+                String fname = rs.getString(3);
+                String lname = rs.getString(4);
+                user = new User(userEmail, fname, lname, null);
+                user.setActive(active);
+                users.add(user);
+            }
+
+            return users;
+        } finally {
+            connectionPool.freeConnection(connection);
         }
-
-        return users;
     }
 
     /**
@@ -112,33 +125,48 @@ public class UserDB {
      * @throws SQLException
      */
     public User getUser(String email) throws SQLException {
-        User user = new User();
-        String preparedSQL = "SELECT active, email, fname, lname FROM user_table WHERE email = ?";
-        PreparedStatement ps = connection.prepareStatement(preparedSQL);
-        ps.setString(1, email);
-        ResultSet product = ps.executeQuery();
 
-        while (product.next()) {
-            boolean active = product.getBoolean(1);
-            String userEmail = product.getString(2);
-            String fname = product.getString(3);
-            String lname = product.getString(4);
-            user = new User(userEmail, fname, lname, null);
-            user.setActive(active);
+        ConnectionPool connectionPool = null;
+        Connection connection = null;
+        try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+
+            User user = new User();
+            String preparedQuery = "SELECT active, email, fname, lname FROM user_table WHERE email = ?";
+            PreparedStatement ps = connection.prepareStatement(preparedQuery);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                boolean active = rs.getBoolean(1);
+                String userEmail = rs.getString(2);
+                String fname = rs.getString(3);
+                String lname = rs.getString(4);
+                user = new User(userEmail, fname, lname, null);
+                user.setActive(active);
+            }
+
+            return user;
+        } finally {
+            connectionPool.freeConnection(connection);
         }
-
-        return user;
     }
 
     /**
      * This method physically deletes a user from the user_table
      *
      * @param user
-     * @return false returns false if there's nothing to delete
-     * @throws InventoryDBException
+     * @return false returns false if there's nothing to de
+     * @throws java.sql.SQLException
      */
-    public boolean delete(User user) {
+    public boolean delete(User user) throws SQLException {
+        ConnectionPool connectionPool = null;
+        Connection connection = null;
         try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+
             String DELETE_STMT = "DELETE FROM User_Table where email = ?";
             PreparedStatement prepare = connection.prepareStatement(DELETE_STMT);
             prepare.setString(1, user.getEmail());
@@ -147,9 +175,8 @@ public class UserDB {
             prepare.close();
             return rowCount == 1;
 
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            connectionPool.freeConnection(connection);
         }
-        return false;
     }
 }
