@@ -3,14 +3,12 @@ CREATE DATABASE InventoryDB;
 
 USE InventoryDB;
 
-DROP TABLE if exists user_table;
-
 CREATE TABLE if not exists user_table (
     active BOOLEAN NOT NULL DEFAULT TRUE,
     email VARCHAR(40) NOT NULL UNIQUE,
     fname VARCHAR(20) NOT NULL,
     lname VARCHAR(20) NOT NULL,
-    password ENUM('password') NOT NULL,
+    password VARCHAR(20) NOT NULL,
     CONSTRAINT user_email_pk PRIMARY KEY (email)
 );
 
