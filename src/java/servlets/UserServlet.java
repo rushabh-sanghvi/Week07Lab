@@ -98,15 +98,13 @@ public class UserServlet extends HttpServlet {
       switch (action) {
         case "add":
           if (checkIsValid(new String[]{email, fname, lname, password})) {
-            User user = new User(email, fname, lname, password);
-            us.insert(user);
+            us.insert(email, fname, lname, password);
           } else {
             request.setAttribute("error", "All fields are required");
           }
         case "edit":
           if (checkIsValid(new String[]{email, fname, lname})) {
-            User user = new User(email, fname, lname, null);
-            us.update(user);
+            us.update(email, fname, lname, password);
           } else {
             request.setAttribute("error", "All fields are required");
           }

@@ -74,6 +74,7 @@
               <th>Email</th>
               <th>First Name</th>
               <th>Last Name</th>
+              <th>Role Name</th>
               <th class="text-center">Edit</th>
               <th class="text-center">Delete</th>
             </tr>
@@ -84,6 +85,7 @@
                 <td>${user.email}</td>
                 <td>${user.fname}</td>
                 <td>${user.lname}</td>
+                <td>${user.role.roleName}</td>
                 <td class="text-center">
                   <a href="/users?action=edit&email=${user.email}" 
                      class="row-btn">
@@ -134,6 +136,13 @@
               value="${user.lname}"
               placeholder="Last Name"
               />
+          <input 
+            class="input-dark"
+            type="password" 
+            name="password" 
+            value="${user.password}"
+            placeholder="Password"
+            />
             <input type="hidden" name="action" value="edit" />
             <input class="mb-0 input-primary" type="submit" value="Edit"/>
             <a href="/users?action=clearEdit">

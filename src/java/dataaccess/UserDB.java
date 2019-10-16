@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import models.User;
 import java.util.List;
+import models.Role;
 
 public class UserDB {
 
@@ -62,7 +63,7 @@ public class UserDB {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
 
-            String preparedQuery = "UPDATE User_Table set active=?, fname=?, lname=? where email=?";
+            String preparedQuery = "UPDATE User_Table set active=?, fname=?, lname=?, password=? where email=?";
             int successCount = 0;
 
             PreparedStatement statement = connection.prepareStatement(preparedQuery);
@@ -70,6 +71,7 @@ public class UserDB {
             statement.setString(2, user.getFname());
             statement.setString(3, user.getLname());
             statement.setString(4, user.getEmail());
+            statement.setString(5, user.getPassword());
 
             successCount = statement.executeUpdate();
             statement.close();
@@ -96,7 +98,7 @@ public class UserDB {
             User user;
             ArrayList<User> users = new ArrayList<>();
 
-            String preparedQuery = "SELECT active, email, fname, lname FROM user_table";
+            String preparedQuery = "SELECT active, email, fname, lname,password, RoleID FROM user_table";
             PreparedStatement ps = connection.prepareStatement(preparedQuery);
             ResultSet rs = ps.executeQuery();
 
@@ -105,7 +107,13 @@ public class UserDB {
                 String userEmail = rs.getString(2);
                 String fname = rs.getString(3);
                 String lname = rs.getString(4);
-                user = new User(userEmail, fname, lname, null);
+                String password = rs.getString(5);
+                
+                int roleID = rs.getInt(6);
+                RoleDB roleDB = new RoleDB();
+                Role role = roleDB.getRole(roleID);
+                        
+                user = new User(userEmail, fname, lname, password, role);
                 user.setActive(active);
                 users.add(user);
             }
@@ -133,7 +141,7 @@ public class UserDB {
             connection = connectionPool.getConnection();
 
             User user = new User();
-            String preparedQuery = "SELECT active, email, fname, lname FROM user_table WHERE email = ?";
+            String preparedQuery = "SELECT active, email, fname, lname, password, RoleID FROM user_table WHERE email = ?";
             PreparedStatement ps = connection.prepareStatement(preparedQuery);
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
@@ -143,7 +151,14 @@ public class UserDB {
                 String userEmail = rs.getString(2);
                 String fname = rs.getString(3);
                 String lname = rs.getString(4);
-                user = new User(userEmail, fname, lname, null);
+                String password = rs.getString(5);
+                int roleID = rs.getInt(6);
+                
+                RoleDB roleDB = new RoleDB();
+                Role role = roleDB.getRole(roleID);
+                
+                
+                user = new User(userEmail, fname, lname, password, role);
                 user.setActive(active);
             }
 

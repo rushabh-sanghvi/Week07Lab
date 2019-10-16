@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * */
 
 public class UserService {
-    private final UserDB db = new UserDB();
+    
     
     /**
      * This method calls the getUser() method in UserDB.
@@ -20,12 +20,8 @@ public class UserService {
      * @throws Exception - all exceptions that could be had.
      */
     public User get(String email) throws Exception {
+        UserDB db = new UserDB();
         User user = db.getUser(email);
-        
-        if (user == null){
-            throw new Exception("No user found.");
-        }
-        
         return user;
     }
 
@@ -35,10 +31,8 @@ public class UserService {
      * @throws Exception - all exceptions that could be had.
      */
     public List<User> getAll() throws Exception {
+        UserDB db = new UserDB();
         ArrayList<User> userList = (ArrayList<User>) db.getAll();
-        if (userList == null){
-            throw new Exception("No users found.");
-        }
         ArrayList<User> activeUsers = new ArrayList<>();
         
         for (int i = 0; i < userList.size(); i++) {
@@ -55,13 +49,10 @@ public class UserService {
      * @return
      * @throws Exception 
      */
-    public int update(User user) throws Exception {
+    public int update(String email, String fname, String lname, String password) throws Exception {
+        UserDB db = new UserDB();
+        User user = new User(email, fname, lname, password, null);
         int i = db.update(user);
-        
-        if (i == 0){
-            throw new Exception("No user found.");
-        }
-        
         return i;
     }
 
@@ -74,14 +65,10 @@ public class UserService {
      * @throws Exception - all exceptions that could be had.
      */
     public int delete(String email) throws Exception {
+        UserDB db = new UserDB();
         User user = get(email);
         user.setActive(false);
         int i = db.update(user);
-        
-        if (i == 0){
-            throw new Exception("No user found");
-        }
-        
         return i;
     }
 
@@ -91,13 +78,10 @@ public class UserService {
      * @return the int from UserDb
      * @throws Exception - all exceptions that could be had.
      */
-    public int insert(User user) throws Exception {
+    public int insert(String email, String fname, String lname, String password) throws Exception {
+        UserDB db = new UserDB();
+        User user = new User(email, fname, lname, password, null);
         int i = db.insert(user);
-        
-        if (i == 0){
-            throw new Exception("User could not be added.");
-        }
-        
         return i;
     }
 

@@ -9,19 +9,29 @@ public class User implements Serializable
     String fname;
     String lname;
     String password;
+    Role role;
 
     public User() 
     {
         active=true;
     }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
     
-    public User(String email, String fname, String lname, String password) 
+    public User(String email, String fname, String lname, String password, Role role) 
     {
       this.active= true;
         this.email = email;
         this.fname = fname;
         this.lname = lname;
         this.password = password;
+        this.role = role;
     }
 
     public boolean isActive() 
