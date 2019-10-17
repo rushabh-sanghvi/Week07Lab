@@ -144,7 +144,7 @@
             placeholder="Password"
             />
             <input type="hidden" name="action" value="edit" />
-            <input class="mb-0 input-primary" type="submit" value="Edit"/>
+            <input class="mb-0 input-primary" type="submit" value="Save"/>
             <a href="/users?action=clearEdit">
               <input class="mb-0 input-secondary" type="button" value="Cancel" >
             </a>

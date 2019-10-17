@@ -98,7 +98,7 @@ public class UserDB {
             User user;
             ArrayList<User> users = new ArrayList<>();
 
-            String preparedQuery = "SELECT active, email, fname, lname,password, RoleID FROM user_table";
+            String preparedQuery = "SELECT active, email, fname, lname, password, role FROM user_table";
             PreparedStatement ps = connection.prepareStatement(preparedQuery);
             ResultSet rs = ps.executeQuery();
 
@@ -141,7 +141,7 @@ public class UserDB {
             connection = connectionPool.getConnection();
 
             User user = new User();
-            String preparedQuery = "SELECT active, email, fname, lname, password, RoleID FROM user_table WHERE email = ?";
+            String preparedQuery = "SELECT active, email, fname, lname, password, role FROM user_table WHERE email = ?";
             PreparedStatement ps = connection.prepareStatement(preparedQuery);
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
