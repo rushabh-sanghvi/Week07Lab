@@ -13,9 +13,11 @@ body {
     "header header header"
     "useradd main useredit"
 }
+
 .navbar {
   grid-area: header;
 }
+
 .main {
   grid-area: main;
 }
@@ -92,6 +94,23 @@ body {
   color: #eee;
 }
 
+@media only screen and (max-width: 1024px) {
+  .page {
+    grid-template-columns: auto;
+    grid-template-rows: 3.5rem auto auto auto;
+    grid-template-areas:
+      "header"
+      "useredit"
+      "main"
+      "useradd";
+  }
+  .user-add-form {
+    margin: 10px;
+  }
+  .user-edit-form {
+    margin: 10px;
+  }
+}
 ::-webkit-scrollbar {
   width: 5px;  /* Remove scrollbar space */
   background: transparent;  /* Optional: just make scrollbar invisible */
