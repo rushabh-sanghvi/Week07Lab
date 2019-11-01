@@ -61,6 +61,11 @@
             placeholder="Password"
             required
             />
+          <select class="input-dark" name="urole">
+             <c:forEach items="${roles}" var="role"> 
+              <option value="${role.roleID}">${role.roleName}</option>
+             </c:forEach> 
+          </select>
           <input type="hidden" name="action" value="add" />
           <input class="input-primary" type="submit" value="Save"/>
         </form>
@@ -143,6 +148,16 @@
             value="${user.password}"
             placeholder="Password"
             />
+          <select class="input-dark" name="urole">
+             <c:forEach items="${roles}" var="role"> 
+                    <c:if test="${user.role.roleID == role.roleID}">
+                        <option value="${role.roleID}" selected>${role.roleName}</option>
+                    </c:if>
+                    <c:if test="${user.role.roleID != role.roleID}">
+                        <option value="${role.roleID}">${role.roleName}</option>
+                    </c:if>
+             </c:forEach>            
+          </select>
             <input type="hidden" name="action" value="edit" />
             <input class="mb-0 input-primary" type="submit" value="Save"/>
             <a href="/users?action=clearEdit">

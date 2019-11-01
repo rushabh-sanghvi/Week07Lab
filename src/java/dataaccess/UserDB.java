@@ -24,15 +24,14 @@ public class UserDB {
         ConnectionPool connectionPool = null;
         Connection connection = null;
 
-        int rows = 0;
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
             String preparedQuery
                     = "INSERT INTO User_Table "
-                    + "(email, fname, lname, password) "
+                    + "(email, fname, lname, password, role) "
                     + "VALUES "
-                    + "(?, ?, ?, ?)";
+                    + "(?, ?, ?, ?, ?)";
 
             PreparedStatement ps = connection.prepareStatement(preparedQuery);
 
@@ -40,8 +39,9 @@ public class UserDB {
             ps.setString(2, user.getFname());
             ps.setString(3, user.getLname());
             ps.setString(4, user.getPassword());
+            ps.setInt(5, user.getRole().getRoleID());
 
-            rows = ps.executeUpdate();
+            int rows = ps.executeUpdate();
             ps.close();
             return rows;
         } finally {
@@ -49,13 +49,7 @@ public class UserDB {
         }
     }
 
-    /**
-     * This method update the User record.
-     *
-     * @param user User to be updated
-     * @return successCount Number of records updated
-     * @throws java.sql.SQLException
-     */
+  
     public int update(User user) throws SQLException {
         ConnectionPool connectionPool = null;
         Connection connection = null;
@@ -63,32 +57,26 @@ public class UserDB {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
 
-            String preparedQuery = "UPDATE User_Table set active=?, fname=?, lname=?, password=? where email=?";
-            int successCount = 0;
-
+            String preparedQuery = "UPDATE User_Table SET active=?, fname=?, lname=?, password=?, role=? WHERE email=?";
+            
             PreparedStatement statement = connection.prepareStatement(preparedQuery);
             statement.setBoolean(1, user.isActive());
             statement.setString(2, user.getFname());
             statement.setString(3, user.getLname());
-            statement.setString(4, user.getEmail());
-            statement.setString(5, user.getPassword());
+            statement.setString(4, user.getPassword());
+            statement.setInt(5, user.getRole().getRoleID());
+            statement.setString(6, user.getEmail());
 
-            successCount = statement.executeUpdate();
+            int rows = statement.executeUpdate();
             statement.close();
-            return successCount;
+            return rows;
         } finally {
             connectionPool.freeConnection(connection);
         }
 
     }
 
-    /**
-     * This method queries the database for all users. Every user is put into an
-     * ArrayList of users
-     *
-     * @return ArrayList users - the list of users retrieved from the database.
-     * @throws SQLException
-     */
+
     public List<User> getAll() throws SQLException {
         ConnectionPool connectionPool = null;
         Connection connection = null;
@@ -123,15 +111,44 @@ public class UserDB {
             connectionPool.freeConnection(connection);
         }
     }
+    
+    public List<User> getActive() throws SQLException
+    {
+        ConnectionPool connectionPool = null;
+        Connection connection = null;
+        try{
+        connectionPool = ConnectionPool.getInstance();
+        connection = connectionPool.getConnection();
+            
+        User user;
+        ArrayList<User> users = new ArrayList<>();
+        
+        String preparedQuery = "SELECT active, email, fname, lname, password, role FROM user_table WHERE active is true";
+        PreparedStatement ps = connection.prepareStatement(preparedQuery);
+        ResultSet rs = ps.executeQuery();
 
-    /**
-     * This method queries the database for a particular user (dude) that has a
-     * matching email.
-     *
-     * @param email - the user's email to be searched for.
-     * @return User dude - the user retrieved from the database.
-     * @throws SQLException
-     */
+            while (rs.next()) {
+                boolean active = rs.getBoolean(1);
+                String userEmail = rs.getString(2);
+                String fname = rs.getString(3);
+                String lname = rs.getString(4);
+                String password = rs.getString(5);
+                
+                int roleID = rs.getInt(6);
+                RoleDB roleDB = new RoleDB();
+                Role role = roleDB.getRole(roleID);
+                        
+                user = new User(userEmail, fname, lname, password, role);
+                user.setActive(active);
+                users.add(user);
+            }
+            return users;
+        } finally {
+            connectionPool.freeConnection(connection);
+        }
+    }
+
+
     public User getUser(String email) throws SQLException {
 
         ConnectionPool connectionPool = null;
@@ -168,14 +185,8 @@ public class UserDB {
         }
     }
 
-    /**
-     * This method physically deletes a user from the user_table
-     *
-     * @param user
-     * @return false returns false if there's nothing to de
-     * @throws java.sql.SQLException
-     */
-    public boolean delete(User user) throws SQLException {
+
+    public int delete(User user) throws SQLException {
         ConnectionPool connectionPool = null;
         Connection connection = null;
         try {
@@ -186,9 +197,9 @@ public class UserDB {
             PreparedStatement prepare = connection.prepareStatement(DELETE_STMT);
             prepare.setString(1, user.getEmail());
 
-            int rowCount = prepare.executeUpdate();
+            int rows = prepare.executeUpdate();
             prepare.close();
-            return rowCount == 1;
+            return rows;
 
         } finally {
             connectionPool.freeConnection(connection);

@@ -6,12 +6,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.Role;
 import models.User;
+import services.RoleService;
 import services.UserService;
 
 public class UserServlet extends HttpServlet {
-
-  /**
+/**
    * The doGet method in UserServlet, which works with users.jsp
    *
    * @param request request
@@ -23,7 +24,8 @@ public class UserServlet extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
     UserService us = new UserService();
-
+    RoleService rs = new RoleService();
+    
     String email = request.getParameter("email");
 
     String action = request.getParameter("action");
@@ -69,6 +71,10 @@ public class UserServlet extends HttpServlet {
     } catch (Exception e) {
       request.setAttribute("error", e.getMessage());
     }
+    try {
+      request.setAttribute("roles", rs.getAll());
+    }catch(Exception e) {
+      request.setAttribute("error", e.getMessage());}
 
     getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
   }
@@ -85,12 +91,13 @@ public class UserServlet extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
     UserService us = new UserService();
-
+     RoleService rs = new RoleService();
+    
     String email = request.getParameter("email");
     String fname = request.getParameter("fname");
     String lname = request.getParameter("lname");
     String password = request.getParameter("password");
-
+    int urole = Integer.parseInt(request.getParameter("urole"));
     String action = request.getParameter("action");
     action = action == null ? "" : action;
 
@@ -98,16 +105,18 @@ public class UserServlet extends HttpServlet {
       switch (action) {
         case "add":
           if (checkIsValid(new String[]{email, fname, lname, password})) {
-            us.insert(email, fname, lname, password);
+            us.insert(email, fname, lname, password, urole);
           } else {
             request.setAttribute("error", "All fields are required");
           }
+          break;
         case "edit":
           if (checkIsValid(new String[]{email, fname, lname})) {
-            us.update(email, fname, lname, password);
+            us.update(email, fname, lname, password, urole);
           } else {
             request.setAttribute("error", "All fields are required");
           }
+          break;
       }
     } catch (Exception ex) {
       request.setAttribute("error", ex.getMessage());
@@ -118,6 +127,11 @@ public class UserServlet extends HttpServlet {
     } catch (Exception ex) {
       request.setAttribute("error", ex.getMessage());
     }
+    try {
+      request.setAttribute("roles", rs.getAll());
+    } catch(Exception e) {
+      request.setAttribute("error", e.getMessage());}
+ 
 
     getServletContext().getRequestDispatcher("/WEB-INF/users.jsp")
             .forward(request, response);
